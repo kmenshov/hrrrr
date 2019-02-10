@@ -32,6 +32,7 @@ module.exports = new Confidence.Store({
     plugins: [
       { plugin: 'inert' },
       { plugin: `${__dirname}/web` },
+      { plugin: `${__dirname}/api`, routes: { prefix: '/api/v0' } },
     ],
   },
 });
