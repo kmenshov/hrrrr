@@ -1,6 +1,7 @@
 'use strict';
 
 const Confidence = require('confidence');
+const Path = require('path');
 
 // Glue manifest as a confidence store
 module.exports = new Confidence.Store({
@@ -10,6 +11,11 @@ module.exports = new Confidence.Store({
       $env: 'PORT',
       $coerce: 'number',
       $default: 3000,
+    },
+    routes: {
+      files: {
+        relativeTo: Path.resolve(__dirname, '../public'),
+      },
     },
     debug: {
       $filter: { $env: 'NODE_ENV' },
@@ -21,5 +27,11 @@ module.exports = new Confidence.Store({
         request: ['implementation'],
       },
     },
+  },
+  register: {
+    plugins: [
+      { plugin: 'inert' },
+      { plugin: `${__dirname}/web` },
+    ],
   },
 });

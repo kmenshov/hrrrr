@@ -25,7 +25,8 @@
   "dependencies": {
     "confidence": "^4.0.1",
     "glue": "^6.0.0",
-    "hapi": "^18.1.0"
+    "hapi": "^18.1.0",
+    "inert": "^5.1.2"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
