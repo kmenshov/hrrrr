@@ -2,10 +2,15 @@
   "name": "hrrrr",
   "version": "0.0.1",
   "description": "Hapi, React, Redux, React Router",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kmenshov/hrrrr.git"
+  },
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "commit-prepare": "./shell-scripts/commit-prepare.sh"
   },
   "keywords": [
     "hapi",
@@ -18,6 +23,8 @@
   "author": "Kirill Menshov",
   "license": "ISC",
   "dependencies": {
+    "confidence": "^4.0.1",
+    "glue": "^6.0.0",
     "hapi": "^18.1.0"
   },
   "devDependencies": {

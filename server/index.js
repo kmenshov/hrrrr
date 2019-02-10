@@ -1,15 +1,14 @@
-/* eslint-disable strict, no-console */
+/* eslint-disable no-console */
 
 'use strict';
 
-const Hapi = require('hapi');
-
-const server = Hapi.server({
-  port: 3000,
-  host: 'localhost',
-});
+const Glue = require('glue');
+const Manifest = require('./manifest');
 
 const init = async () => {
+  const manifest = Manifest.get('/');
+  const server = await Glue.compose(manifest);
+
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 };
