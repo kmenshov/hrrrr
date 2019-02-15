@@ -6,19 +6,29 @@
 </head>
 <body>
   <h1>Hurr-Durr!</h1>
-
+  <button onclick="fetchOnClick()">Click Me!</button>
   <script>
+    function reportDiv(text) {
+      var reportDiv = document.createElement('div');
+      reportDiv.innerHTML = text;
+      document.body.appendChild(reportDiv);
+    }
+
     setTimeout(() => {
       fetch('/api/v0/test/2-seconds-after-page-load')
         .then(function(response) {
           return response.text();
         })
-        .then(function(text) {
-          var reportDiv = document.createElement('div');
-          reportDiv.innerHTML = text;
-          document.body.appendChild(reportDiv);
-        });
+        .then(reportDiv);
     }, 2000);
+
+    function fetchOnClick() {
+      fetch('/api/v0/test/on-button-click')
+        .then(function(response) {
+          return response.text();
+        })
+        .then(reportDiv);
+    }
   </script>
 </body>
 </html>
