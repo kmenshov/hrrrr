@@ -8,9 +8,9 @@ module.exports = new Confidence.Store({
   server: {
     host: 'localhost',
     port: {
-      $env: 'PORT',
-      $coerce: 'number',
+      $filter: { $env: 'NODE_ENV' },
       $default: 3000,
+      test: 3001,
     },
     routes: {
       files: {
