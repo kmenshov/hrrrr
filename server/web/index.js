@@ -12,6 +12,7 @@ exports.plugin = {
           directory: {
             path: '.',
             redirectToSlash: true,
+            lookupCompressed: true,
           },
         },
       });

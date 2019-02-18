@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-export default class PagesPage extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
 
