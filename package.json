@@ -9,12 +9,12 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-
     "test": "npm run test:jest && npm run test:nightwatch",
     "test:jest": "NODE_ENV=test jest",
     "test:nightwatch": "NODE_ENV=test ./node_modules/.bin/nightwatch",
-
-    "commit:prepare": "npm run commit:lint && npm test",
+    "webpack:watch": "webpack --watch --progress --colors",
+    "webpack:build": "rm -rf ./public/* && NODE_ENV=production webpack",
+    "commit:prepare": "npm run commit:lint && npm run webpack:build && npm test",
     "commit:lint": "./node_modules/.bin/eslint ."
   },
   "keywords": [
@@ -28,15 +28,25 @@
   "author": "Kirill Menshov",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
     "confidence": "^4.0.1",
     "glue": "^6.0.0",
     "hapi": "^18.1.0",
-    "inert": "^5.1.2"
+    "html-webpack-plugin": "^3.2.0",
+    "inert": "^5.1.2",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.2.3"
   },
   "devDependencies": {
     "chromedriver": "^2.46.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-webpack": "^0.11.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",

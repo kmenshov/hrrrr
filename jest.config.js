@@ -11,4 +11,5 @@ module.exports = {
       lines: 100,
     },
   },
+  transform: {},
 };
