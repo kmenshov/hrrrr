@@ -30,7 +30,7 @@ const compressionPlugin = new CompressionWebpackPlugin({
 });
 
 module.exports = {
-  entry: Path.resolve(__dirname, 'client/index.jsx'),
+  entry: ['@babel/polyfill', Path.resolve(__dirname, 'client/index.jsx')],
   output: {
     path: Path.resolve(__dirname, 'public/'),
     filename: 'bundle-[chunkhash].js',

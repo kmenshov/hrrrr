@@ -16,16 +16,15 @@ export default class App extends React.Component {
     setTimeout(() => { this.fetchApi('2-seconds-after-page-load'); }, 2000);
   }
 
-  fetchApi(param) {
+  async fetchApi(param) {
     if (typeof param !== 'string') { param = 'on-button-click'; }
 
-    fetch(`/api/v0/test/${param}`)
-      .then(response => response.text())
-      .then(text => this.setState(
-        prevState => ({
-          reports: prevState.reports.concat(text),
-        }),
-      ));
+    const response = await fetch(`/api/v0/test/${param}`);
+    const text = await response.text();
+
+    this.setState(prevState => (
+      { reports: prevState.reports.concat(text) }
+    ));
   }
 
   render() {

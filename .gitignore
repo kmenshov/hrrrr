@@ -3,3 +3,8 @@ node_modules
 /test/coverage/
 /test/integration/screenshots/
 chromedriver.log
+
+# These are rebuilt with webpack:
+/public/bundle*
+/public/styles*
+/public/index.html
