@@ -10,5 +10,6 @@ module.exports = {
   rules: {
     "strict": ["off"],
     "no-unused-vars": ["error", { "args": "none" }],
+    "object-curly-newline": ["error", { "consistent": true }],
   },
 };

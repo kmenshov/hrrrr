@@ -1,3 +1,10 @@
-/* eslint-disable import/prefer-default-export */
+export const ASYNC = { request: 'REQUEST', success: 'SUCCESS', failure: 'FAILURE' };
 
-export const TEST_REQUEST = 'TEST_REQUEST';
+function createAsyncActionType(baseActionType) {
+  return Object.values(ASYNC).reduce((accumulator, asyncEvent) => {
+    accumulator[asyncEvent] = `${baseActionType}:${asyncEvent}`;
+    return accumulator;
+  }, {});
+}
+
+export const TEST_REQUEST = createAsyncActionType('TEST_REQUEST');

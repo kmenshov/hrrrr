@@ -50,6 +50,7 @@
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
+    "redux-saga": "^1.0.1",
     "sass-loader": "^7.1.0",
     "uglifyjs-webpack-plugin": "^2.1.1",
     "webpack": "^4.29.4",

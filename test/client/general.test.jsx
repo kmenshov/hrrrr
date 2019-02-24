@@ -4,16 +4,12 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import App from 'app';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import createSagaMiddleware, { END } from 'redux-saga';
 import initialState from 'app/initialState';
 import reducers from 'app/reducers';
-
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+import saga from 'app/sagas';
 
 jest.useFakeTimers();
 
@@ -30,38 +26,60 @@ const mockFetch = () => {
 
 const unmockFetch = () => { global.fetch = undefined; };
 
+let Root, store; // eslint-disable-line
+
+beforeAll(mockFetch);
+
+afterAll(unmockFetch);
+
+beforeEach(() => {
+  const sagaMiddleware = createSagaMiddleware();
+  store = createStore(reducers, initialState, applyMiddleware(sagaMiddleware));
+  sagaMiddleware.run(saga);
+  Root = () => (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+});
+
+afterEach(() => {
+  store.dispatch(END);
+});
+
 describe('Example test', () => {
-  test('checks that a new text appears in component after 2 seconds', () => {
-    mockFetch();
-    const store = createStore(reducers, initialState);
-    const wrapper = mount(<Root store={store} />);
+  test('checks that a new text appears in component after 2 seconds', (done) => {
+    const wrapper = mount(<Root />);
 
     expect(wrapper.exists('div.report')).toBe(false);
 
     jest.advanceTimersByTime(2500);
-    wrapper.update();
 
-    expect(wrapper.exists('div.report')).toBe(true);
-    expect(wrapper.find('div.report').text()).toBe('{"code":200,"message":"OK: 2-seconds-after-page-load"}');
-    unmockFetch();
+    setImmediate(() => {
+      wrapper.update();
+      expect(wrapper.exists('div.report')).toBe(true);
+      expect(wrapper.find('div.report').text()).toBe('2-seconds-after-page-load');
+      done();
+    });
   });
 
-  test('interacts with component', () => {
-    mockFetch();
-    const store = createStore(reducers, initialState);
-    const wrapper = mount(<Root store={store} />);
+  test('interacts with component', (done) => {
+    const wrapper = mount(<Root />);
 
     expect(wrapper.exists('div.report')).toBe(false);
     wrapper.find('button').simulate('click');
     jest.advanceTimersByTime(2500);
     wrapper.find('button').simulate('click');
 
-    const reports = wrapper.find('div.report').map(node => node.text());
-    expect(reports).toEqual([
-      '{"code":200,"message":"OK: on-button-click"}',
-      '{"code":200,"message":"OK: 2-seconds-after-page-load"}',
-      '{"code":200,"message":"OK: on-button-click"}',
-    ]);
-    unmockFetch();
+    setImmediate(() => {
+      wrapper.update();
+      const reports = wrapper.find('div.report').map(node => node.text());
+      expect(reports).toEqual([
+        'on-button-click',
+        '2-seconds-after-page-load',
+        'on-button-click',
+      ]);
+      done();
+    });
   });
 });

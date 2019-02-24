@@ -1,10 +1,10 @@
 import { handleActions } from 'redux-actions';
 import initialState from 'app/initialState';
-import { TEST_REQUEST } from 'app/actions';
+import { ASYNC, TEST_REQUEST } from 'app/actions';
 
 const reportsReducer = handleActions(
   {
-    [TEST_REQUEST]: (state, { payload }) => (
+    [TEST_REQUEST[ASYNC.success]]: (state, { payload }) => (
       [
         ...state,
         payload,

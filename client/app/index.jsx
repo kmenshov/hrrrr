@@ -3,14 +3,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { testRequest } from 'app/actions';
+import { ASYNC, testRequest } from 'app/actions';
 
 const mapStateToProps = state => ({
   reports: state.reports,
 });
 
 const mapDispatchToProps = {
-  testRequest,
+  onTestRequest: testRequest[ASYNC.request],
 };
 
 class App extends React.Component {
@@ -24,7 +24,7 @@ class App extends React.Component {
 
   fetchApi(param) {
     if (typeof param !== 'string') { param = 'on-button-click'; }
-    this.props.testRequest(`{"code":200,"message":"OK: ${param}"}`); // eslint-disable-line react/destructuring-assignment
+    this.props.onTestRequest(param); // eslint-disable-line react/destructuring-assignment
   }
 
   render() {
@@ -46,13 +46,13 @@ class App extends React.Component {
 App.defaultProps = {
   reports: [],
 
-  testRequest: () => {},
+  onTestRequest: () => {},
 };
 
 App.propTypes = {
   reports: PropTypes.arrayOf(PropTypes.string),
 
-  testRequest: PropTypes.func,
+  onTestRequest: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

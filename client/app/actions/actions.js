@@ -2,4 +2,11 @@
 import { createAction } from 'redux-actions';
 import { TEST_REQUEST } from './actionTypes';
 
-export const testRequest = createAction(TEST_REQUEST);
+function createAsyncAction(asyncActionType) {
+  return Object.entries(asyncActionType).reduce((accumulator, asyncEvent) => {
+    accumulator[asyncEvent[0]] = createAction(asyncEvent[1]);
+    return accumulator;
+  }, {});
+}
+
+export const testRequest = createAsyncAction(TEST_REQUEST);
