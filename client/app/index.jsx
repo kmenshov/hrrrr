@@ -1,34 +1,34 @@
 /* eslint-disable react/no-array-index-key, no-param-reassign */
-/* global fetch */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { testRequest } from 'app/actions';
 
-export default class App extends React.Component {
+const mapStateToProps = state => ({
+  reports: state.reports,
+});
+
+const mapDispatchToProps = {
+  testRequest,
+};
+
+class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      reports: [],
-    };
 
     this.fetchApi = this.fetchApi.bind(this);
 
     setTimeout(() => { this.fetchApi('2-seconds-after-page-load'); }, 2000);
   }
 
-  async fetchApi(param) {
+  fetchApi(param) {
     if (typeof param !== 'string') { param = 'on-button-click'; }
-
-    const response = await fetch(`/api/v0/test/${param}`);
-    const text = await response.text();
-
-    this.setState(prevState => (
-      { reports: prevState.reports.concat(text) }
-    ));
+    this.props.testRequest(param); // eslint-disable-line react/destructuring-assignment
   }
 
   render() {
-    const { reports } = this.state;
+    const { reports } = this.props;
 
     return (
       <React.Fragment>
@@ -42,3 +42,17 @@ export default class App extends React.Component {
     );
   }
 }
+
+App.defaultProps = {
+  reports: [],
+
+  testRequest: () => {},
+};
+
+App.propTypes = {
+  reports: PropTypes.arrayOf(PropTypes.string),
+
+  testRequest: PropTypes.func,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
