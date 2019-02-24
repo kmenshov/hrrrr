@@ -1,14 +1,17 @@
+import { handleActions } from 'redux-actions';
 import initialState from 'app/initialState';
 import { TEST_REQUEST } from 'app/actions';
 
-export default function reportsReducer(state = initialState.reports, action) {
-  switch (action.type) {
-    case TEST_REQUEST:
-      return [
+const reportsReducer = handleActions(
+  {
+    [TEST_REQUEST]: (state, { payload }) => (
+      [
         ...state,
-        action.param,
-      ];
-    default:
-      return state;
-  }
-}
+        payload,
+      ]
+    ),
+  },
+  initialState.reports,
+);
+
+export default reportsReducer;

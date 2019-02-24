@@ -24,7 +24,7 @@ class App extends React.Component {
 
   fetchApi(param) {
     if (typeof param !== 'string') { param = 'on-button-click'; }
-    this.props.testRequest(param); // eslint-disable-line react/destructuring-assignment
+    this.props.testRequest(`{"code":200,"message":"OK: ${param}"}`); // eslint-disable-line react/destructuring-assignment
   }
 
   render() {
