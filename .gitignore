@@ -8,3 +8,6 @@ chromedriver.log
 /public/bundle*
 /public/styles*
 /public/index.html
+
+# Secrets:
+/server/config/secrets.js

@@ -3,7 +3,7 @@
 'use strict';
 
 const Glue = require('glue');
-const Manifest = require('./manifest');
+const Manifest = require('./config/manifest');
 
 const createServer = () => {
   const manifest = Manifest.get('/');

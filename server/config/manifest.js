@@ -3,6 +3,8 @@
 const Confidence = require('confidence');
 const Path = require('path');
 
+const serverRootPath = Path.resolve(__dirname, '..');
+
 const goodOptions = {
   ops: {
     $filter: { $env: 'NODE_ENV' },
@@ -40,7 +42,7 @@ module.exports = new Confidence.Store({
     },
     routes: {
       files: {
-        relativeTo: Path.resolve(__dirname, '../public'),
+        relativeTo: Path.resolve(serverRootPath, '../public'),
       },
     },
     // debug: {
@@ -58,8 +60,8 @@ module.exports = new Confidence.Store({
     plugins: [
       { plugin: 'good', options: goodOptions },
       { plugin: 'inert' },
-      { plugin: `${__dirname}/web` },
-      { plugin: `${__dirname}/api`, routes: { prefix: '/api/v0' } },
+      { plugin: Path.resolve(serverRootPath, './web') },
+      { plugin: Path.resolve(serverRootPath, './api'), routes: { prefix: '/api/v0' } },
     ],
   },
 });
