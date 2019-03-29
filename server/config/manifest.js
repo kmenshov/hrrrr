@@ -2,6 +2,7 @@
 
 const Confidence = require('confidence');
 const Path = require('path');
+const dbConfig = require('./database.js');
 
 const serverRootPath = Path.resolve(__dirname, '..');
 
@@ -31,6 +32,12 @@ const goodOptions = {
   },
 };
 
+const schwiftyOptions = {
+  knex: dbConfig,
+  models: Path.resolve(serverRootPath, './models'),
+  migrationsDir: Path.resolve(serverRootPath, './config/migrations'),
+};
+
 // Glue manifest as a confidence store
 module.exports = new Confidence.Store({
   server: {
@@ -45,20 +52,11 @@ module.exports = new Confidence.Store({
         relativeTo: Path.resolve(serverRootPath, '../public'),
       },
     },
-    // debug: {
-    //   $filter: { $env: 'NODE_ENV' },
-    //   $default: {
-    //     log: ['error'],
-    //     request: ['error'],
-    //   },
-    //   production: {
-    //     request: ['implementation'],
-    //   },
-    // },
   },
   register: {
     plugins: [
       { plugin: 'good', options: goodOptions },
+      { plugin: 'schwifty', options: schwiftyOptions },
       { plugin: 'inert' },
       { plugin: Path.resolve(serverRootPath, './web') },
       { plugin: Path.resolve(serverRootPath, './api'), routes: { prefix: '/api/v0' } },

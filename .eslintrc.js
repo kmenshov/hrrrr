@@ -8,8 +8,10 @@ module.exports = {
   },
   extends: 'airbnb',
   rules: {
-    "strict": ["off"],
+    "func-names": ["off"],
     "no-unused-vars": ["error", { "args": "none" }],
     "object-curly-newline": ["error", { "consistent": true }],
+    "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+    "strict": ["off"],
   },
 };
