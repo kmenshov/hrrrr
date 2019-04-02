@@ -33,6 +33,7 @@ module.exports = {
   entry: ['@babel/polyfill', Path.resolve(__dirname, 'client/index.jsx')],
   output: {
     path: Path.resolve(__dirname, 'public/'),
+    publicPath: '/',
     filename: 'bundle-[chunkhash].js',
   },
 

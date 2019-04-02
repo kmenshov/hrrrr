@@ -17,5 +17,18 @@ exports.plugin = {
         },
       });
     });
+
+    // return index.html for everything except API requests
+    server.ext('onPreResponse', (request, h) => {
+      const { response } = request;
+      if (
+        response.isBoom &&
+        response.output.statusCode === 404 &&
+        request.path.substring(0, 5) !== '/api/'
+      ) {
+        return h.file('index.html');
+      }
+      return h.continue;
+    });
   },
 };
