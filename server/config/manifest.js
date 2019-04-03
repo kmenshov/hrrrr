@@ -9,7 +9,7 @@ const serverRootPath = Path.resolve(__dirname, '..');
 const goodOptions = {
   ops: {
     $filter: { $env: 'NODE_ENV' },
-    $default: { interval: 1 * 60 * 1000 },
+    $default: { interval: 10 * 60 * 1000 },
     production: { interval: 5 * 60 * 1000 },
     test: false,
   },

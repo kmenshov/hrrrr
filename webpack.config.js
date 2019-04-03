@@ -4,6 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -28,6 +29,10 @@ const compressionPlugin = new CompressionWebpackPlugin({
   cache: true,
   threshold: 8192,
 });
+
+const copyPlugin = new CopyWebpackPlugin([
+  { from: 'static' },
+]);
 
 module.exports = {
   entry: ['@babel/polyfill', Path.resolve(__dirname, 'client/index.jsx')],
@@ -66,5 +71,5 @@ module.exports = {
     minimizer: [uglifyJs],
   },
 
-  plugins: [htmlPlugin, cssExtractPlugin, optimizeCSS, compressionPlugin],
+  plugins: [htmlPlugin, cssExtractPlugin, optimizeCSS, compressionPlugin, copyPlugin],
 };

@@ -1,5 +1,10 @@
 'use strict';
 
+const shouldRedirect = (path) => {
+  const passYouShall = ['/api/', '/favi'];
+  return !passYouShall.includes(path.substring(0, 5));
+};
+
 exports.plugin = {
   name: 'webPages',
   version: '0.0.1',
@@ -18,13 +23,13 @@ exports.plugin = {
       });
     });
 
-    // return index.html for everything except API requests
+    // return index.html for everything except API and favicon
     server.ext('onPreResponse', (request, h) => {
       const { response } = request;
       if (
         response.isBoom &&
         response.output.statusCode === 404 &&
-        request.path.substring(0, 5) !== '/api/'
+        shouldRedirect(request.path)
       ) {
         return h.file('index.html');
       }

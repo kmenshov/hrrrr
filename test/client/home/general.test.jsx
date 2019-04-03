@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
-
-import App from 'app';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+
+import App from 'app';
 import createSagaMiddleware, { END } from 'redux-saga';
 import initialState from 'app/initialState';
 import reducers from 'app/reducers';
@@ -38,7 +39,9 @@ beforeEach(() => {
   sagaMiddleware.run(saga);
   Root = () => (
     <Provider store={store}>
-      <App />
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
     </Provider>
   );
 });

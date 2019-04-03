@@ -4,10 +4,9 @@ node_modules
 /test/integration/screenshots/
 chromedriver.log
 
-# These are rebuilt with webpack:
-/public/bundle*
-/public/styles*
-/public/index.html
+# Public is cleared in npm scripts,
+# so it should be completely rebuilt with webpack each time:
+/public/
 
 # Secrets:
 /server/config/secrets.js

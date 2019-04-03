@@ -6,6 +6,9 @@ module.exports = {
       }
     },
   },
+  globals: {
+    window: 'readonly',
+  },
   extends: 'airbnb',
   rules: {
     "func-names": ["off"],
