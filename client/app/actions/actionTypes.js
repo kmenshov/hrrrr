@@ -1,10 +1,6 @@
-export const ASYNC = { request: 'REQUEST', success: 'SUCCESS', failure: 'FAILURE' };
-
-function createAsyncActionType(baseActionType) {
-  return Object.values(ASYNC).reduce((accumulator, asyncEvent) => {
-    accumulator[asyncEvent] = `${baseActionType}:${asyncEvent}`;
-    return accumulator;
-  }, {});
-}
+import { createAsyncActionType } from './actionHelpers';
 
 export const TEST_REQUEST = createAsyncActionType('TEST_REQUEST');
+
+export const FETCH_USERS = createAsyncActionType('FETCH_USERS');
+export const DELETE_USER = createAsyncActionType('DELETE_USER');

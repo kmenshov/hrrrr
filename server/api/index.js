@@ -1,5 +1,7 @@
 'use strict';
 
+const controllers = require('./controllers');
+
 exports.plugin = {
   name: 'api',
   version: '0.0.1',
@@ -12,6 +14,7 @@ exports.plugin = {
           return { code: 200, message: `OK: ${request.params.message}` };
         },
       },
+      ...controllers,
     ]);
   },
 };

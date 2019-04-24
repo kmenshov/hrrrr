@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 let i = 0;
 
 describe('General tests to see if Nightwatch is working', function() {

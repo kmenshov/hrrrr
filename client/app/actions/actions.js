@@ -1,12 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import { createAction } from 'redux-actions';
-import { TEST_REQUEST } from './actionTypes';
 
-function createAsyncAction(asyncActionType) {
-  return Object.entries(asyncActionType).reduce((accumulator, asyncEvent) => {
-    accumulator[asyncEvent[0]] = createAction(asyncEvent[1]);
-    return accumulator;
-  }, {});
-}
+import { createAsyncAction } from './actionHelpers';
+import * as type from './actionTypes';
 
-export const testRequest = createAsyncAction(TEST_REQUEST);
+export const testRequest = createAsyncAction(type.TEST_REQUEST);
+
+export const fetchUsers = createAsyncAction(type.FETCH_USERS);
+export const deleteUser = createAsyncAction(type.DELETE_USER);

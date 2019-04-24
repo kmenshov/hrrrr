@@ -13,6 +13,9 @@ module.exports = {
     global: {
       lines: 100,
     },
+    'client/': {
+      lines: 95,
+    },
   },
   // transform: {},
 };

@@ -47,6 +47,9 @@ module.exports = new Confidence.Store({
       $default: 3000,
       test: 3001,
     },
+    router: {
+      stripTrailingSlash: true,
+    },
     routes: {
       files: {
         relativeTo: Path.resolve(serverRootPath, '../public'),

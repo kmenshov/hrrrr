@@ -1,7 +1,4 @@
-let server;
-beforeAll(async () => {
-  server = await __createServer();
-});
+beforeAll(__initServer);
 
 test('returns param from the test path', async () => {
   let response = await server.inject('/api/v0/test/test-route');
