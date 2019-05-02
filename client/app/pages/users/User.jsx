@@ -34,5 +34,4 @@ User.propTypes = {
   onDelete: PropTypes.func,
 };
 
-
 export default User;

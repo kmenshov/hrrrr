@@ -17,7 +17,7 @@ const dummyUsers = [
 ];
 
 beforeAll(() => {
-  fetchMock.mock('/api/v0/users/', dummyUsers, { name: 'getUsers' });
+  fetchMock.get('/api/v0/users/', dummyUsers, { name: 'getUsers' });
 });
 
 afterAll(fetchMock.restore);
@@ -43,6 +43,28 @@ describe('Users page', () => {
     ).toBe(true));
 
     expect(fetchMock.calls('getUsers').length).toBe(1);
+  });
+
+  test('creates a user', async () => {
+    const newUserName = 'New user';
+
+    fetchMock.post(
+      '/api/v0/users/',
+      (_url, opts) => ({ id: 777, name: JSON.parse(opts.body).name }),
+      { name: 'createUser' },
+    );
+
+    const wrapper = mount(<Root />);
+    await nextLoop(wrapper);
+    expect(wrapper.containsMatchingElement(<span>{newUserName}</span>)).toBe(false);
+
+    wrapper.find('form').find('#name').simulate('change', { target: { value: newUserName } });
+    wrapper.find('form').simulate('submit');
+
+    await nextLoop(wrapper);
+
+    expect(wrapper.containsMatchingElement(<span>{newUserName}</span>)).toBe(true);
+    expect(fetchMock.calls('createUser').length).toBe(1);
   });
 
   test('deletes users', async () => {

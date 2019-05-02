@@ -16,6 +16,10 @@ describe('sortArrayByProperty', () => {
     },
   ];
 
+  test('returns the input value if not array', () => {
+    expect(genHelper.sortArrayByProperty('test')).toBe('test');
+  });
+
   test('can sort arrays by objects property', () => {
     expect(genHelper.sortArrayByProperty(source)).toEqual(
       [
@@ -30,6 +34,40 @@ describe('sortArrayByProperty', () => {
         {
           id: 11,
           name: 'eleven',
+        },
+      ],
+    );
+  });
+
+  test('works fine with duplicated keys', () => {
+    const localSource = [
+      {
+        id: 2,
+        name: 'Two',
+      },
+      {
+        id: 1,
+        name: 'duplicate',
+      },
+      {
+        id: 1,
+        name: 'one',
+      },
+    ];
+
+    expect(genHelper.sortArrayByProperty(localSource)).toEqual(
+      [
+        {
+          id: 1,
+          name: 'duplicate',
+        },
+        {
+          id: 1,
+          name: 'one',
+        },
+        {
+          id: 2,
+          name: 'Two',
         },
       ],
     );

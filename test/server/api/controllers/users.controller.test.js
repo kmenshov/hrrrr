@@ -11,7 +11,29 @@ beforeAll(__initServer);
 test('lists all users', async () => {
   const response = await server.inject('/api/v0/users');
 
-  expect(response.result).toEqual(dummyData);
+  expect(response.result.slice(0)).toEqual(dummyData);
+});
+
+test('creates a user', async () => {
+  let response = await server.inject({
+    method: 'POST',
+    url: '/api/v0/users/',
+    payload: { name: 'First new user' },
+  });
+  expect(response.statusCode).toEqual(200);
+  const firstUser = response.result;
+
+  response = await server.inject({
+    method: 'POST',
+    url: '/api/v0/users/',
+    payload: { name: 'Second new user' },
+  });
+  expect(response.statusCode).toEqual(200);
+  const secondUser = response.result;
+
+  expect(firstUser.name).toBe('First new user');
+  expect(secondUser.name).toBe('Second new user');
+  expect(secondUser.id).toBe(firstUser.id + 1);
 });
 
 test('deletes user', async () => {

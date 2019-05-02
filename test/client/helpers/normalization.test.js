@@ -88,6 +88,73 @@ describe('arrayToNormalized', () => {
   });
 });
 
+describe('addOrReplaceInNormalized', () => {
+  test('can add or replace in a normalized object', () => {
+    const source = {
+      allIds: [5, 1, 7],
+      byId: {
+        5: { id: 5, name: 'Five' },
+        1: { id: 1, name: 'One' },
+        7: { id: 7, name: 'Seven' },
+      },
+    };
+
+    const newRecord = { id: 9, name: 'Nine' };
+    const modifiedRecord = { id: 1, name: 'Eleven' };
+
+    expect(normHelper.addOrReplaceInNormalized(source, newRecord)).toEqual({
+      allIds: [5, 1, 7, 9],
+      byId: {
+        5: { id: 5, name: 'Five' },
+        1: { id: 1, name: 'One' },
+        7: { id: 7, name: 'Seven' },
+        9: { id: 9, name: 'Nine' },
+      },
+    });
+
+    expect(normHelper.addOrReplaceInNormalized(source, modifiedRecord)).toEqual({
+      allIds: [5, 1, 7],
+      byId: {
+        5: { id: 5, name: 'Five' },
+        1: { id: 1, name: 'Eleven' },
+        7: { id: 7, name: 'Seven' },
+      },
+    });
+  });
+
+  test('can add or replace in a normalized object by any property', () => {
+    const source = {
+      allIds: ['Five', 'One', 'Seven'],
+      byId: {
+        Five: { id: 5, name: 'Five' },
+        One: { id: 1, name: 'One' },
+        Seven: { id: 7, name: 'Seven' },
+      },
+    };
+
+    const newRecord = { id: 9, name: 'Nine' };
+    const modifiedRecord = { id: 11, name: 'One' };
+
+    expect(normHelper.addOrReplaceInNormalized(source, newRecord, 'name')).toEqual({
+      allIds: ['Five', 'One', 'Seven', 'Nine'],
+      byId: {
+        Five: { id: 5, name: 'Five' },
+        One: { id: 1, name: 'One' },
+        Seven: { id: 7, name: 'Seven' },
+        Nine: { id: 9, name: 'Nine' },
+      },
+    });
+
+    expect(normHelper.addOrReplaceInNormalized(source, modifiedRecord, 'name')).toEqual({
+      allIds: ['Five', 'One', 'Seven'],
+      byId: {
+        Five: { id: 5, name: 'Five' },
+        One: { id: 11, name: 'One' },
+        Seven: { id: 7, name: 'Seven' },
+      },
+    });
+  });
+});
 
 describe('deleteFromNormalized', () => {
   test('can delete from a normalized object by any property', () => {

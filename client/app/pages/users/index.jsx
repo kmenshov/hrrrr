@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 
 import { userType } from 'app/types';
 import { getUsers } from 'app/selectors';
-import { ASYNC, fetchUsers, deleteUser } from 'app/actions';
+import { ASYNC, fetchUsers, createUser, deleteUser } from 'app/actions';
 
 import User from './User';
+import UserCreate from './UserCreate';
 
 const mapStateToProps = state => ({
   users: getUsers(state),
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchUsers: fetchUsers[ASYNC.request],
+  createUser: createUser[ASYNC.request],
   deleteUser: deleteUser[ASYNC.request],
 };
 
@@ -37,6 +39,7 @@ class Users extends React.PureComponent {
     return (
       <React.Fragment>
         {users}
+        <UserCreate onSubmit={this.props.createUser} />
       </React.Fragment>
     );
   }
@@ -46,6 +49,7 @@ Users.defaultProps = {
   users: [],
 
   fetchUsers: () => {},
+  createUser: () => {},
   deleteUser: () => {},
 };
 
@@ -53,6 +57,7 @@ Users.propTypes = {
   users: PropTypes.arrayOf(userType),
 
   fetchUsers: PropTypes.func,
+  createUser: PropTypes.func,
   deleteUser: PropTypes.func,
 };
 

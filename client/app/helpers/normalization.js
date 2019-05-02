@@ -25,6 +25,21 @@ export function arrayToNormalized(array, options) {
   };
 }
 
+export function addOrReplaceInNormalized(normalized, newRecord, indexKey = 'id') {
+  // can't use Object.assign because it doesn't duplicate nested objects
+  const newNormalized = {
+    allIds: normalized.allIds.slice(0),
+    byId: { ...normalized.byId },
+  };
+
+  if (!newNormalized.allIds.includes(newRecord[indexKey])) {
+    newNormalized.allIds.push(newRecord[indexKey]);
+  }
+  newNormalized.byId[newRecord[indexKey]] = { ...newRecord };
+
+  return newNormalized;
+}
+
 export function deleteFromNormalized(normalized, id) {
   // can't use Object.assign because it doesn't duplicate nested objects
   const newNormalized = {
