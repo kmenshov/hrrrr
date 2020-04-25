@@ -1,3 +1,5 @@
+// Creates a new migration, with the name of the migration being added.
+
 const knexInit = require('./knexInit');
 
 (async () => {

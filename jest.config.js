@@ -18,4 +18,5 @@ module.exports = {
     },
   },
   // transform: {},
+  transformIgnorePatterns: ['<rootDir>/server/', '<rootDir>/node_modules/'],
 };

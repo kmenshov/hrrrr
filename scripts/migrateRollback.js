@@ -1,5 +1,6 @@
-/* eslint-disable no-console */
+// Rolls back the latest migration group.
 
+/* eslint-disable no-console */
 const knexInit = require('./knexInit');
 
 (async () => {
